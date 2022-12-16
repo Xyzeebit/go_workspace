@@ -4,7 +4,7 @@ import (
 	"encoding/base64"
 	"encoding/hex"
 	"fmt"
-	// "encoding/json"
+	"encoding/json"
 	// "encoding/xml"
 	// "encoding/csv"
 	// "os"
@@ -15,6 +15,7 @@ func main() {
 
 	encodeBase64(message)
 	hexEncoding(message)
+	jsonEncoding()
 }
 
 func encodeBase64(message string) {
@@ -43,4 +44,30 @@ func hexEncoding(message string) {
 	decoded, _ := hex.DecodeString(encoded)
 	fmt.Println("Decoding message:")
 	fmt.Println(string(decoded))
+}
+
+func jsonEncoding() {
+	fmt.Println("------------ JSON Encoding example ----------------")
+	type Employee struct {
+		Id int `json: "id"`
+		Name string `json: "name"`
+		Email string `json: "email"`
+	}
+
+	fmt.Println("------- Struct to JSON---------")
+	emp := &Employee{ Id: 12345, Name: "Michael", Email: "michael@email.com" }
+	b, err := json.Marshal(emp)
+	if err != nil {
+		fmt.Println(err)
+		return
+	}
+	fmt.Println(string(b))
+
+	fmt.Println("------ JSON string to struct ------------")
+	var newEmp Employee
+	// str := `{"Id":"4566","Name":"Brown","Email":"brown@email.com"}`
+	json.Unmarshal([]byte(b), &newEmp)
+	fmt.Printf("Id: %d\n",newEmp.Id)
+	fmt.Printf("Name: %s\n",newEmp.Name)
+	fmt.Printf("Email: %s\n",newEmp.Email)
 }
