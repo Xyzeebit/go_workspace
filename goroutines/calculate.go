@@ -6,7 +6,7 @@ import (
 )
 
 func main() {
-	fmt.Printf("gorountine demo\n");
+	fmt.Printf("goroutine demo\n");
 
 	// run function in background
 	go calculate()

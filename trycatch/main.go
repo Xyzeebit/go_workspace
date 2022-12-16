@@ -17,6 +17,6 @@ func main() {
 		fmt.Println("Done")
 	}).Catch(func(_ try.E) {
 		fmt.Println("exception catched") // print
-		try.Throw() 
+		// try.Throw() 
 	})
 }
