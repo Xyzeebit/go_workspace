@@ -6,8 +6,8 @@ import (
 	"fmt"
 	"encoding/json"
 	"encoding/xml"
-	// "encoding/csv"
-	// "os"
+	"encoding/csv"
+	"os"
 )
 
 func main() {
@@ -17,6 +17,7 @@ func main() {
 	hexEncoding(message)
 	jsonEncoding()
 	xmlEncoding()
+	csvEncoding()
 }
 
 func encodeBase64(message string) {
@@ -117,4 +118,67 @@ func xmlEncoding() {
 	fmt.Printf("Email: %s\n", newEmp.Email)
 	fmt.Printf("CountryCode: %s\n", newEmp.Country.CountryCode)
 	fmt.Printf("CountryName: %s\n", newEmp.Country.CountryName)
+}
+
+func csvEncoding() {
+	fmt.Println("------------ CSV Encoding example ----------------")
+
+	type Employee struct {
+		Name string
+		Email string
+		Country string
+	}
+
+	fmt.Println("Read a csv file and load to an array of struct...")
+	file, err := os.Open("demo.csv")
+	if err != nil {
+		fmt.Println(err)
+		return
+	}
+	defer file.Close()
+	reader := csv.NewReader(file)
+	reader.FieldsPerRecord = 3
+	reader.Comma = ';'
+
+	csvData, err := reader.ReadAll()
+	if err != nil {
+		fmt.Println(err)
+		os.Exit(1)
+	}
+
+	var employee Employee
+	var employees []Employee
+
+	for _, item := range csvData {
+		employee.Name = item[0]
+		employee.Email = item[1]
+		employee.Country = item[2]
+		employees = append(employees, employee)
+		fmt.Printf("Name: %s\nEmail: %s\nCountry: %s", 
+		employee.Name, employee.Email, employee.Country)
+	}
+	fmt.Println("Show all employees ----------------")
+	fmt.Println(employees)
+
+	fmt.Println("Write data to a csv file ----------------")
+	csvFile, err := os.Create("encode.csv")
+	if err != nil {
+		fmt.Println("Error: ", err)
+		return
+	}
+
+	defer csvFile.Close()
+
+	writer := csv.NewWriter(csvFile)
+	writer.Comma = ';'
+	for _, itemEmp := range employees {
+		records := []string {itemEmp.Name, itemEmp.Email, itemEmp.Country}
+		err := writer.Write(records)
+		if err != nil {
+			fmt.Println("Error: ", err)
+			return
+		}
+	}
+	writer.Flush()
+	fmt.Println(">>>>Done")
 }
