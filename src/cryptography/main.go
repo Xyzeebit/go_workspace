@@ -6,11 +6,15 @@ import (
 	"crypto/hmac"
 	"crypto/md5"
 	"crypto/rand"
+	"crypto/rsa"
 	"crypto/sha256"
+	"crypto/x509"
 	"encoding/base64"
 	"encoding/hex"
+	"encoding/pem"
 	"fmt"
 	"io"
+	"io/ioutil"
 )
 
 func main() {
@@ -132,3 +136,38 @@ func decrypt_symmetric_crypto(key, message string) string {
 
 	return string(encrypted)
 }
+
+func generateRSAKeys() {
+	fmt.Println("Generating RSA keys...")
+
+	pubKeyFile := "pub_rsa.key"
+	privKeyFile := "pri_rsa.key"
+
+	privateKey, err := rsa.GenerateKey(rand.Reader, 1024)
+	if err != nil {
+		panic(err)
+	}
+
+	// extract private and public keys from RSA keys
+	privASN1 := x509.MarshalPKCS1PrivateKey(privateKey)
+	pubASN1, err := x509.MarshalPKIXPublicKey(&privateKey.PublicKey)
+	if err != nil {
+		panic(err)
+	}
+
+	// store the private and public keys into files
+	privBytes := pem.EncodeToMemory(&pem.Block{
+		Type: "RSA PRIVATE KEY",
+		Bytes: privASN1,
+	})
+	pubBytes := pem.EncodeToMemory(&pem.Block{
+		Type: "RSA PUBLIC KEY",
+		Bytes: pubASN1,
+	})
+
+	ioutil.WriteFile(privKeyFile, privBytes, 0644)
+	ioutil.WriteFile(pubKeyFile, pubBytes, 0644)
+
+	fmt.Println("Done")
+}
+
