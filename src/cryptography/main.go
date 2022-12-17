@@ -40,6 +40,18 @@ func main() {
 	fmt.Println(key)
 	fmt.Println("decrypted:")
 	fmt.Println(decrypted)
+
+	// asymmetric crypto
+	generateRSAKeys()
+	plainText := "Hello world, go!"
+	fmt.Println("plainText:")
+	fmt.Println(plainText)
+	rsa_encrypted := encrypt_asymmetric_crypto(plainText)
+	fmt.Println("encrypted:")
+	fmt.Println(rsa_encrypted)
+	rsa_decrypted := decrypt_asymmetric_crypto(rsa_encrypted)
+	fmt.Println("decrypted:")
+	fmt.Println(rsa_decrypted)
 }
 
 func hash_md5() {
@@ -141,7 +153,7 @@ func generateRSAKeys() {
 	fmt.Println("Generating RSA keys...")
 
 	pubKeyFile := "pub_rsa.key"
-	privKeyFile := "pri_rsa.key"
+	privKeyFile := "priv_rsa.key"
 
 	privateKey, err := rsa.GenerateKey(rand.Reader, 1024)
 	if err != nil {
@@ -171,3 +183,66 @@ func generateRSAKeys() {
 	fmt.Println("Done")
 }
 
+func encrypt_asymmetric_crypto(message string) string {
+	fmt.Println("--------- Encrypt asymmetric_crypto ---------------")
+
+	pubKeyFile := "pub_rsa.key"
+
+	pubBytes, err := ioutil.ReadFile(pubKeyFile)
+	if err != nil {
+		panic(err)
+	}
+	pubBlock, _ := pem.Decode(pubBytes)
+	if pubBlock == nil {
+		fmt.Println("Failed to load public key file")
+		return ""	
+	}
+	
+	// Decode the RSA public key
+	publicKey, err := x509.ParsePKIXPublicKey(pubBlock.Bytes)
+	if err != nil {
+		fmt.Printf("bad public key %s", err)
+		return ""
+	}
+
+	// encrypt message
+	msg := []byte(message)
+	encryptedMsg, err := rsa.EncryptPKCS1v15(rand.Reader, publicKey.(*rsa.PublicKey), msg)
+	if err != nil {
+		panic(err)
+	}
+	return base64.StdEncoding.EncodeToString(encryptedMsg)
+}
+
+func decrypt_asymmetric_crypto(message string) string {
+	fmt.Println("--------- Decrypt asymmetric_crypto ---------------")
+
+	privKeyFile := "priv_rsa.key"
+
+	privBytes, err := ioutil.ReadFile(privKeyFile)
+	if err != nil {
+		panic(err)
+	}
+
+	privBlock, _ := pem.Decode(privBytes)
+	if privBlock == nil {
+		fmt.Println("Failed to load private key file")
+		return ""
+	}
+
+	// Decode the RSA private key
+	privateKey, err := x509.ParsePKCS1PrivateKey(privBlock.Bytes)
+	if err != nil {
+		fmt.Printf("Bad private key %s", err)
+		return ""
+	}
+
+	// decrypt message
+	encrypted, _ := base64.StdEncoding.DecodeString(message)
+	decryptedMsg, err := rsa.DecryptPKCS1v15(rand.Reader, privateKey, encrypted)
+	if err != nil {
+		panic(err)
+	}
+
+	return string(decryptedMsg)
+}
