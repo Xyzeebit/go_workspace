@@ -3,6 +3,7 @@ package main
 import (
 	"fmt"
 	"io/ioutil"
+	"os"
 )
 
 func main() {
@@ -14,6 +15,8 @@ func main() {
 	// read data from a file
 	fmt.Println("reading data from a file")
 	readFile()
+
+	fileReader("main.go")
 }
 
 func writeFile(message string) {
@@ -26,4 +29,28 @@ func readFile() {
 	data, _ := ioutil.ReadFile("testgo.txt")
 	fmt.Println("file content:")
 	fmt.Println(string(data))
+}
+
+func process(data []byte) {
+	fmt.Println(string(data))
+}
+
+func fileReader(fileName string) error {
+	file, err := os.Open(fileName);
+	if err != nil {
+		return err;
+	}
+	defer file.Close();
+	data := make([]byte, 100);
+	
+	for {
+		count, err := file.Read(data);
+		if err != nil {
+			return err;
+		}
+		if count == 0 {
+			return nil;
+		}
+		process(data[:count]);
+	}
 }
