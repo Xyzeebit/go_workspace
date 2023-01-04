@@ -30,7 +30,7 @@ func main() {
 				fmt.Println(msg1);
 			case msg2 := <- c2: 
 				fmt.Println(msg2);
-			case <- time.After(time.Second):
+			case <- sleep(time.Second):
 				fmt.Println("timeout");
 			// default:
 				// fmt.Println("nothing ready");
@@ -40,4 +40,8 @@ func main() {
 
 	var input string;
 	fmt.Scanln(&input);
+}
+
+func sleep(d time.Duration) <- chan time.Time {
+	return time.After(d);
 }
