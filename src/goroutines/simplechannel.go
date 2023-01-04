@@ -12,9 +12,8 @@ func main(){
 	// run a function in background
 	go func() {
 		fmt.Println("goroutine process")
-		// c <- 10 // write data to a channel
+		c <- 10 // write data to a channel
 		time.Sleep(1000 * time.Microsecond)
-		c <- 20
 	}()
 
 	val := <-c // read data from a channel

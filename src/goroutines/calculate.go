@@ -9,7 +9,7 @@ func main() {
 	fmt.Printf("goroutine demo\n");
 
 	// run function in background
-	go calculate()
+	go calculateAndSleep()
 
 	index := 0
 
@@ -33,8 +33,8 @@ func main() {
 	fmt.Println("Done")
 }
 
-func calculate() {
-	i := 12
+func calculateAndSleep() {
+	i := 10
 	for i < 15 {
 		fmt.Printf("calculate() = %d\n", i)
 		var result float64 = 8.4 * float64(i)
