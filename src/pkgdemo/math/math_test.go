@@ -6,6 +6,13 @@ func TestAverage(t *testing.T) {
 	var v float64;
 	v = Average([]float64{1,2});
 	if v != 1.5 {
-		t.Error("Expect 1.5, got ", v);
+		t.Error("Expected 1.5, got ", v);
+	}
+}
+
+func TestMin(t *testing.T) {
+	v := Min([]float64{1,2});
+	if v != 1 {
+		t.Error("Expected 1, got ", v);
 	}
 }
