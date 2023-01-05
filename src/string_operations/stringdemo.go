@@ -71,5 +71,11 @@ func main() {
 	fmt.Println(strings.Contains(sample, "go"))
 	fmt.Println(strings.Count(sample, "o"))
 	fmt.Println(strings.Index(sample, "go"))
+	fmt.Println(strings.HasPrefix(sample, "hello"))
+	fmt.Println(strings.Replace(sample, "ll", "ke", 1))
+	fmt.Println(strings.Split(sample, " "))
+	arr := []byte(sample)
+	str := string([]byte{'h', 'e', 'l', 'l', 'o', ' ', 'w', 'o', 'r', 'l', 'd', ',', ' ', 'g', 'o', '!'});
+	fmt.Println(arr, ":", str)
 
 }
