@@ -16,3 +16,10 @@ func TestMin(t *testing.T) {
 		t.Error("Expected 1, got ", v);
 	}
 }
+
+func TestMax(t *testing.T) {
+	v := Max([]float64{1,2});
+	if v != 2 {
+		t.Error("Expected 2, got ", v);
+	}
+}
