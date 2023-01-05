@@ -5,12 +5,14 @@ package math
 //     x := []float64{1,2,3}
 //
 //     y := math.Average(x)
-func Average(xs []float64) float64 {
+//
+//     fmt.Println(y) //2
+func Average(numbers []float64) float64 {
 	total := float64(0);
-	for _, i := range xs {
+	for _, i := range numbers {
 		total += i;
 	}
-	return total / float64(len(xs));
+	return total / float64(len(numbers));
 }
 
 // Finds the minimum number in a slice of numbers
