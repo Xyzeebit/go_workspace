@@ -3,6 +3,7 @@ package main
 import (
 	"container/list"
 	"fmt"
+	// "sort"
 )
 
 func main() {
@@ -14,4 +15,12 @@ func main() {
 	for e := x.Front(); e != nil; e = e.Next() {
 		fmt.Println(e.Value.(int));
 	}
+	// fmt.Println()
+
+	// kids := []Person {
+	// 	{ "Jill", 9 },
+	// 	{ "Jack", 10 },
+	// };
+	// sort.Sort(ByName(kids));
+	// fmt.Println(kids);
 }
