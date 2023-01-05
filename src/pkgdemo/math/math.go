@@ -8,6 +8,9 @@ package math
 //
 //     fmt.Println(y) //2
 func Average(numbers []float64) float64 {
+	if len(numbers) < 1 {
+		return float64(0);
+	}
 	total := float64(0);
 	for _, i := range numbers {
 		total += i;
@@ -24,6 +27,9 @@ func Average(numbers []float64) float64 {
 //     fmt.Println(y) // 1
 //
 func Min(numbers []float64) float64 {
+	if len(numbers) < 1 {
+		return float64(0);
+	}
 	var min float64 = numbers[0];
 	for _, i := range numbers {
 		if i < min {
@@ -42,6 +48,9 @@ func Min(numbers []float64) float64 {
 //     fmt.Println(y) // 3
 //
 func Max(numbers []float64) float64 {
+	if len(numbers) < 1 {
+		return float64(0);
+	}
 	var max float64 = numbers[0];
 	for _, i := range numbers {
 		if max < i {
