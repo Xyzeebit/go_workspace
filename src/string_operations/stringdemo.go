@@ -1,6 +1,7 @@
 package main
 
 import (
+	"bytes"
 	"fmt"
 	"strconv"
 	"strings"
@@ -77,5 +78,11 @@ func main() {
 	arr := []byte(sample)
 	str := string([]byte{'h', 'e', 'l', 'l', 'o', ' ', 'w', 'o', 'r', 'l', 'd', ',', ' ', 'g', 'o', '!'});
 	fmt.Println(arr, ":", str)
+	fmt.Println()
+	var buf bytes.Buffer;
+	buf.Write(arr);
+	fmt.Println(buf)
+	s := strings.NewReader(sample);
+	fmt.Println(s)
 
 }
