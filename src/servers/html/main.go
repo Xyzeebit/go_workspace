@@ -5,7 +5,7 @@ import (
 	"net/http"
 )
 
-func hello(res http.ResponseWriter, req *http.Request) {
+func index(res http.ResponseWriter, req *http.Request) {
 	res.Header().Set(
 		"Content-Type",
 		"text/html",
@@ -24,6 +24,13 @@ func hello(res http.ResponseWriter, req *http.Request) {
 }
 
 func main() {
-	http.HandleFunc("/hello", hello);
+	http.HandleFunc("/", index);
+	http.Handle(
+		"/assets/",
+		http.StripPrefix(
+			"/assets/",
+			http.FileServer(http.Dir("assets")),
+		),
+	);
 	http.ListenAndServe(":9000", nil);
 }
