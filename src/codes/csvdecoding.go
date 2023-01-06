@@ -29,12 +29,12 @@ func main() {
 	var c []Country;
 
 	for _, v := range records {
-		n, _ := strconv.ParseInt(v[2], 0, 64);
-		c = append(c, Country {Code: v[0], Name: v[1], Population: int(n) });
+		n, _ := strconv.Atoi(v[2]);
+		c = append(c, Country {Code: v[0], Name: v[1], Population: n });
 		
 	}
 	for i, v := range c {
-		fmt.Println(i, ":", v.Code, v.Name);
+		fmt.Println(i, ":", v.Code, v.Name, v.Population);
 	}
 	
 }
