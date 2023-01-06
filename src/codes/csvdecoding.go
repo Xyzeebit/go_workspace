@@ -3,18 +3,19 @@ package main
 import (
 	"encoding/csv"
 	"fmt"
-	"io/ioutil"
 	"log"
+	"os"
 	"strconv"
-	"strings"
 )
 
 func main() {
-	bs, err := ioutil.ReadFile("records.csv");
+	file, err := os.Open("records.csv");
 	if err != nil {
 		fmt.Println(err)
 	}
-	r := csv.NewReader(strings.NewReader(string(bs)));
+	defer file.Close();
+
+	r := csv.NewReader(file);
 	r.Comma = ',';
 	r.FieldsPerRecord = -1;
 	records, err := r.ReadAll();
