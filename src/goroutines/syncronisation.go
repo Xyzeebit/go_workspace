@@ -2,20 +2,20 @@ package main
 
 import (
 	"fmt"
-	"sync"
+	// "sync"
 	"time"
 )
 
 func main() {
-	m := new(sync.Mutex);
+	// m := new(sync.Mutex);
 
 	for i := 0; i < 10; i++ {
 		go func(i int) {
-			m.Lock();
+			// m.Lock();
 			fmt.Println(i, "start");
 			time.Sleep(time.Second);
 			fmt.Println(i, "end");
-			m.Unlock();
+			// m.Unlock();
 		}(i)
 	}
 
