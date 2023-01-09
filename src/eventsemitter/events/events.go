@@ -28,8 +28,8 @@ func (e *Emitter[T]) on(event string, fn Fn[T]) (evt Emitter[T]) {
 	return *e
 }
 
-func EventsEmitter[T any]() Emitter[T] {
-	return Emitter[T]{
+func EventsEmitter[T any]() *Emitter[T] {
+	return &Emitter[T]{
 		events: make(map[string][]Fn[T]),
 	}
 }
