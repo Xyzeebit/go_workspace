@@ -20,7 +20,14 @@ func (e *Emitter[T]) emit(event string, data T) (evt Emitter[T]) {
 }
 
 func (e *Emitter[T]) on(event string, fn Fn[T]) (evt Emitter[T]) {
-
+	_, ok := e.events[event];
+	if !ok {
+		v := []Fn[T]{ fn };
+		e.events[event] = v;
+		return *e;
+	}
+	e.events[event] = append(e.events[event], fn);
+	return *e;
 }
 
 func EventsEmitter[T any]() Emitter[T] {
