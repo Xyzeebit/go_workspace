@@ -1,7 +1,5 @@
 package events
 
-import "eventsemitter/events"
-
 type Fn[T any] func(T)
 
 type Emitter[T any] struct {
