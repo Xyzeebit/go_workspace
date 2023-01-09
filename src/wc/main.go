@@ -8,10 +8,11 @@ import (
 )
 
 func main() {
-	fmt.Println(os.Stdin);
+	fmt.Println(count(os.Stdin));
 }
 
-// A counter function the counts the words read by the scanner
+// A counter function that counts the words read by the scanner
+//
 // Returns the number of words counted
 func count(r io.Reader) int {
 	// A Scanner is use to read text from a Reader (such as files)
