@@ -3,13 +3,18 @@ package main
 import (
 	"eventsemitter/events"
 	"fmt"
+	"math/rand"
 )
 
 func main() {
-	emitter := events.EventsEmitter[interface{}]();
+	emitter := events.EventsEmitter[int]();
 	
-	emitter.on("hello", func(n interface{}) {
+	emitter.On("hello", func(n int) {
 		fmt.Println(n)
 	});
-	emitter.emit("hello", 20);
+	emitter.Emit("hello", 20);
+	for i := 0; i < 10; i++ {
+		n := rand.Intn(10);
+		emitter.Emit("hello", n);
+	}
 }

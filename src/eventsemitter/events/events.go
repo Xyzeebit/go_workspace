@@ -6,7 +6,7 @@ type Emitter[T any] struct {
 	events map[string][]Fn[T]
 }
 
-func (e *Emitter[T]) emit(event string, data T) (evt Emitter[T]) {
+func (e *Emitter[T]) Emit(event string, data T) (evt Emitter[T]) {
 	listeners, ok := e.events[event]
 	if !ok {
 		return
@@ -17,7 +17,7 @@ func (e *Emitter[T]) emit(event string, data T) (evt Emitter[T]) {
 	return *e
 }
 
-func (e *Emitter[T]) on(event string, fn Fn[T]) (evt Emitter[T]) {
+func (e *Emitter[T]) On(event string, fn Fn[T]) (evt Emitter[T]) {
 	_, ok := e.events[event]
 	if !ok {
 		v := []Fn[T]{fn}
