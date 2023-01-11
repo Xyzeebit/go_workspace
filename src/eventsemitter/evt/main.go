@@ -28,8 +28,8 @@ func countdown(n int) {
 }
 
 func startCounting(emitter *events.Emitter[int]) {
-	for i := 0; i < 10; i++ {
-		n := rand.Intn(10);
+	for i := 1; i < 10; i++ {
+		n := rand.Intn(i);
 		emitter.Emit("count", n);
 	}
 }
